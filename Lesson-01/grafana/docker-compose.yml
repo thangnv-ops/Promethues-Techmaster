@@ -1,0 +1,21 @@
+version: '3.7'
+
+volumes:
+  grafana_data: {}
+
+networks:
+  lesson-01:
+    external: true
+services:
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      # - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - lesson-01

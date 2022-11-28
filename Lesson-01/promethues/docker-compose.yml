@@ -4,7 +4,6 @@ volumes:
     prometheus_data: {}
 networks:
   lesson-01:
-    external: true
 services:
   prometheus:
     image: prom/prometheus:v2.36.2

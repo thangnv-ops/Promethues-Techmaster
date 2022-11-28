@@ -1,0 +1,14 @@
+version: '3'
+services:
+  blackbox:
+    image: prom/blackbox-exporter:latest
+    privileged: true
+    volumes:
+      - ./blackbox.yml:/etc/blackbox_exporter/config.yml
+    ports:
+      - '9115:9115'
+    networks:
+      - lesson-02
+networks:
+  lesson-02:
+    external: true

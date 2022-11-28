@@ -2,8 +2,9 @@ version: '3.7'
 
 volumes:
     prometheus_data: {}
+    grafana_data: {}
 networks:
-  lesson-01:
+  lesson-02:
     external: true
 services:
   prometheus:
@@ -16,8 +17,21 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
     ports:
       - 9090:9090
     networks:
-      - lesson-01
-    restart: always
+      - lesson-02
+    
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./setting/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./setting/grafana.monitoring
+    networks:
+      - lesson-02

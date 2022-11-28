@@ -4,7 +4,7 @@ volumes:
   grafana_data: {}
 
 networks:
-  lesson-01:
+  lesson-02:
     external: true
 services:
   grafana:
@@ -18,4 +18,4 @@ services:
     env_file:
       - ./grafana/config.monitoring
     networks:
-      - lesson-01
+      - lesson-02

@@ -1,0 +1,51 @@
+version: '3.7'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+networks:
+  lesson-03:
+    external: true
+services:
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    volumes:
+      - ./setting/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - lesson-03
+    deploy:
+      resources:
+          limits:
+            cpus: 0.1
+            memory: 200M
+          reservations:
+            memory: 10M
+    
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./setting/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./setting/grafana.monitoring
+    networks:
+      - lesson-03
+    deploy:
+      resources:
+          limits:
+            cpus: 0.5
+            memory: 100M
+          reservations:
+            memory: 10M

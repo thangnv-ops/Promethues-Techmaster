@@ -1,0 +1,22 @@
+version: '3'
+services:
+  blackbox:
+    image: prom/blackbox-exporter:latest
+    privileged: true
+    volumes:
+      - ./blackbox.yml:/etc/blackbox_exporter/config.yml
+    ports:
+      - '9115:9115'
+    networks:
+      - lesson-03
+    deploy:
+        resources:
+            limits:
+              cpus: 0.5
+              memory: 20M
+            reservations:
+              cpus: 0.25
+              memory: 10M
+networks:
+  lesson-03:
+    external: true

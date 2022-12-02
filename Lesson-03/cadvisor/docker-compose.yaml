@@ -1,0 +1,24 @@
+version: '3'
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.45.0
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8080:8080
+    networks:
+      - lesson-03
+    restart: always
+    deploy:
+      resources:
+          limits:
+            cpus: 0.05
+            memory: 100M
+          reservations:
+            memory: 10M
+networks:
+  lesson-03:
+    external: true

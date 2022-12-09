@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 5m
+receivers:
+- name: default-telegram
+  telegram_configs:
+  - api_url: https://api.telegram.org
+    bot_token: 5665058043:AA11GVwHJUtyC-37rupN64ajKYQbNALcpaLck
+    chat_id: -10018546416041
+    disable_notifications: false
+    http_config:
+      follow_redirects: true
+    send_resolved: true
+    parse_mode: ""
+route:
+  continue: false
+  group_by:
+  - job
+  group_interval: 1m
+  group_wait: 30s
+  receiver: default-telegram
+  repeat_interval: 4h
+  routes:
+  - receiver: default-telegram
+templates:
+- /etc/alertmanager/config/*.tmpl

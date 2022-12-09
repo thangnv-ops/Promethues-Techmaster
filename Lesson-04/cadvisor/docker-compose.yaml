@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      - lesson-03
+      - lesson-04
     restart: always
     deploy:
       resources:
@@ -19,5 +19,5 @@ services:
           reservations:
             memory: 10M
 networks:
-  lesson-03:
+  lesson-04:
     external: true

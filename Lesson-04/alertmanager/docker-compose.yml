@@ -9,7 +9,7 @@ services:
       - ./config/:/etc/alertmanager/
     restart: always
     command:
-      - '--config.file=/etc/alertmanager/config.yml'
+      - '--config.file=/etc/alertmanager/thangnv.yml'
       - '--storage.path=/alertmanager'
     networks:
       - lesson-04

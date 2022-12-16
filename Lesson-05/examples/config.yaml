@@ -1,0 +1,45 @@
+tls:
+  enabled: false
+  crt: server.crt
+  key: server.key
+
+basicAuth:
+  enabled: false
+  username: admin
+  password: admin
+
+bearerAuth:
+  enabled: false
+  signingKey: my_secret_key
+
+discovery:
+  # host: localhost
+  # port: 1231
+  # scheme: https
+
+scripts:
+  - name: test
+    command: ./examples/test.sh
+  - name: ping
+    command: ./examples/ping.sh
+  - name: helloworld
+    command: ./examples/helloworld.sh
+    args:
+      - test
+  - name: showtimeout
+    command: ./examples/showtimeout.sh
+    timeout:
+      max_timeout: 60
+  - name: sleep
+    command: sleep
+    args:
+      - "120"
+    timeout:
+      enforced: true
+  - name: docker
+    command: ./examples/docker.sh
+  - name: args
+    command: ./examples/args.sh
+    args:
+      - test1
+      - test2

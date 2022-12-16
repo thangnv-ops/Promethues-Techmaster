@@ -4,7 +4,7 @@ volumes:
     prometheus_data: {}
     grafana_data: {}
 networks:
-  lesson-04:
+  lesson-05:
     external: true
 services:
   prometheus:
@@ -28,7 +28,7 @@ services:
           reservations:
             memory: 10M
     networks:
-      - lesson-04
+      - lesson-05   
   grafana:
     image: grafana/grafana
     user: "472"
@@ -40,7 +40,7 @@ services:
     env_file:
       - ./setting/grafana.monitoring
     networks:
-      - lesson-04
+      - lesson-05
     deploy:
       resources:
           limits:

@@ -4,8 +4,8 @@ receivers:
 - name: default-telegram
   telegram_configs:
   - api_url: https://api.telegram.org
-    bot_token: 5665058043:AA11GVwHJUtyC-37rupN64ajKYQbNALcpaLck
-    chat_id: -10018546416041
+    bot_token: 5962145148:AAEs7cIZSaH9g4PPZaoEwGKAajQ3awwVqFE
+    chat_id: -809040730
     disable_notifications: false
     http_config:
       follow_redirects: true

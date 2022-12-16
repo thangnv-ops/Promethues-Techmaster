@@ -1,0 +1,66 @@
+# my global config
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'my-project'
+
+rule_files:
+  - 'alert.rules.yaml'
+
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "alertmanager:9093"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'script_test'
+    metrics_path: /probe
+    params:
+      script: [test]
+    static_configs:
+      - targets:
+        - 13.212.30.85:9469
+  - job_name: 'script_exporter'
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - 172.31.32.174:9469
+  - job_name: 'script_ping'
+    scrape_interval: 1m
+    scrape_timeout: 30s
+    metrics_path: /probe
+    params:
+      script: [ping]
+      prefix: [script_ping]
+      params: [target]
+      output: [ignore]
+    static_configs:
+      - targets:
+        - example.com
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 13.212.30.85:9469
+      - source_labels: [__param_target]
+        target_label: target
+      - source_labels: [__param_target]
+        target_label: instance
+
